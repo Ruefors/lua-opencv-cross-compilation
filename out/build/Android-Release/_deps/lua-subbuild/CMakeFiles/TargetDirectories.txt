@@ -1,3 +1,0 @@
-/Users/yangjiayu/project/lualib/lua-opencv-cross-compilation/out/build/Android-Release/_deps/lua-subbuild/CMakeFiles/lua-populate.dir
-/Users/yangjiayu/project/lualib/lua-opencv-cross-compilation/out/build/Android-Release/_deps/lua-subbuild/CMakeFiles/edit_cache.dir
-/Users/yangjiayu/project/lualib/lua-opencv-cross-compilation/out/build/Android-Release/_deps/lua-subbuild/CMakeFiles/rebuild_cache.dir

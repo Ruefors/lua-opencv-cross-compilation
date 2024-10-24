@@ -1135,6 +1135,10 @@
         "iid": "03039095-0715-4769-b585-ed6156b43c78",
         "clsid": "ff713175-575a-4a9c-92cd-947af8ea58e6"
     },
+    "cv::_InputOutputArray": {
+        "iid": "ccb20e83-3ff3-4fdc-9c55-1bff727c3479",
+        "clsid": "cca5b613-d2d8-4bce-86f0-ba24ab703016"
+    },
     "cv::Matx12f": {
         "iid": "cf13cbb4-7e8c-45c1-b8cc-2ad6e9aa4136",
         "clsid": "150c8954-d5d5-44f5-8bd3-3c9a04e2c5aa"
@@ -1266,10 +1270,6 @@
     "cv::Range": {
         "iid": "ee4fec59-415b-407b-a1eb-c53272bacd49",
         "clsid": "aaaeecf4-c81d-41a9-8335-2aa9b537c3c0"
-    },
-    "cv::_InputOutputArray": {
-        "iid": "ccb20e83-3ff3-4fdc-9c55-1bff727c3479",
-        "clsid": "cca5b613-d2d8-4bce-86f0-ba24ab703016"
     },
     "cv::GCompileArg": {
         "iid": "86015ffc-092b-4441-a20a-80a2c53b8a17",

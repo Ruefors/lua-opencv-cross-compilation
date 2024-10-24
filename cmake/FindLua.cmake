@@ -58,13 +58,10 @@ if (DEFINED ENV{LUA_DIR})
   unset(_lua_interpreter_names)
 
   if (Lua_INTERPRETER_NAME)
-    set(_lua_interpreter_names 
-    lua
-    ${Lua_INTERPRETER_NAME})
+    set(_lua_interpreter_names ${Lua_INTERPRETER_NAME})
   else()
     if (LUA_VERSION_STRING)
       set(_lua_interpreter_names
-        lua
         luajit-${LUA_VERSION_MAJOR}.${LUA_VERSION_MINOR}
         lua${LUA_VERSION_MAJOR}${LUA_VERSION_MINOR}
         lua${LUA_VERSION_MAJOR}.${LUA_VERSION_MINOR}

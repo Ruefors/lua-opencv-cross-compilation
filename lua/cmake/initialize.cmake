@@ -14,7 +14,6 @@ set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "${CMAKE_CONFIGURATION_TYPE
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_CURRENT_BINARY_DIR}/bin" CACHE PATH "Output directory for applications")
 set(LIBRARY_OUTPUT_PATH "${CMAKE_CURRENT_BINARY_DIR}/lib" CACHE PATH "Output directory for libraries")
 
-
 function(set_target_output_directories target)
   set_target_properties(${target} PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${LIBRARY_OUTPUT_PATH}"
@@ -22,7 +21,6 @@ function(set_target_output_directories target)
     LIBRARY_OUTPUT_DIRECTORY "${LIBRARY_OUTPUT_PATH}"
     RUNTIME_OUTPUT_DIRECTORY "${EXECUTABLE_OUTPUT_PATH}"
   )
-  
 endfunction()
 
 function(vcpkg_regex_replace_string filename match replace)

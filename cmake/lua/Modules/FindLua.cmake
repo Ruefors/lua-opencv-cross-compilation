@@ -179,7 +179,6 @@ function(_lua_find_header)
           HINTS ENV LUA_DIR
           PATH_SUFFIXES ${subdir}
           )
-        message(STATUS "${_lua_include_subdirs}")
         if (LUA_INCLUDE_DIR)
           break()
         endif()
@@ -234,8 +233,8 @@ find_library(LUA_LIBRARY
     ENV LUA_DIR
   PATH_SUFFIXES lib
 )
-
 unset(_lua_library_names)
+
 if (LUA_LIBRARY)
   # include the math library for Unix
   if (UNIX AND NOT APPLE AND NOT BEOS)

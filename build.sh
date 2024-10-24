@@ -5,7 +5,9 @@ die() {
     [ $2 ] && exit $2 || exit 1
 }
 
+#Absolute path to this script
 SCRIPT=$(readlink -f "$0")
+#Absolute path this script is in
 SCRIPTPATH=$(dirname "$SCRIPT")
 
 skip_build=0
@@ -13,36 +15,35 @@ skip_config=0
 has_install=0
 is_dry_run=0
 has_test=0
-GENERATOR=
-PLATFORM=android-26
+GENERATOR=Ninja
+PLATFORM=
 TARGET=all
-ANDROID_NDK_PATH="/Users/yangjiayu/Library/Android/sdk/ndk/21.1.6352462"
 
 print_help() {
     echo '
 Usage: ./build.sh [options]
 
 Options:
-    --help|h|help               显示帮助信息
-    --dry-run                   显示将要执行的命令而不实际运行它们
-    --g                         仅生成 CMake 配置
-    --d                         使用 Debug 编译类型
-    --no-config                 不生成 CMake 配置
-    --build                     仅构建
-    --no-build                  不构建
-    --install                   执行安装
-    --test                      执行测试
-    -G <generator-name>         指定生成系统 ('${GENERATOR}')
-    -A <platform-name>          指定平台 ('${PLATFORM}')
-    --prefix <directory>        安装目录 ('$PREFIX')
-    --target <target-name>      构建目标 ('$TARGET')
-    --ndk <ndk-path>            Android NDK 路径 ('$ANDROID_NDK_PATH')
+    --help|h|help               Display the help message.
+    --dry-run                   Display commands that will be executed without running them.
+    --g                         Generate cmake config only.
+    --d                         Use Debug build type.
+    --no-config                 Do not generate cmake config.
+    --build                     Build only.
+    --no-build                  Do not build.
+    --install                   Install.
+    --test                      Execute test.
+    -G <generator-name>         Specify a build system generator. ('${GENERATOR}')
+    -A <platform-name>          Specify platform name if supported by generator. ('${PLATFORM}')
+    --prefx <directory>         Install directory. ('$PREFIX')
+    --target <target-name>      Target to build. ('$TARGET')
 '
 }
 
 ac_opt=0
 ac_prev=
 for ac_option in "$@"; do
+    # If the previous option needs an argument, assign it.
     if test ${#ac_prev} -ne 0; then
         eval "$ac_prev='$ac_option'"
         ac_prev=
@@ -86,10 +87,6 @@ for ac_option in "$@"; do
             ;;
         -D*)
             EXTRA_CMAKE_OPTIONS="$EXTRA_CMAKE_OPTIONS '$ac_option'"
-            continue
-            ;;
-        --ndk)
-            ac_prev=ANDROID_NDK_PATH
             continue
             ;;
     esac
@@ -137,7 +134,7 @@ for ac_option in "$@"; do
     esac
 
     case "$key" in
-        --binary-dir|--generator|--platform|--prefix|--target|--config-name|--ndk )
+        --binary-dir|--generator|--platform|--prefix|--target|--config-name )
             key="${key:2}"
             key="${key//-/_}"
 
@@ -162,7 +159,7 @@ try_run=
 test $is_dry_run -eq 0 || try_run="echo "
 
 CMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE:-Release}"
-CONFIG_NAME=${CONFIG_NAME:-Android-$CMAKE_BUILD_TYPE}
+CONFIG_NAME=${CONFIG_NAME:-Linux-GCC-$CMAKE_BUILD_TYPE}
 CMAKE_INSTALL_PREFIX="${PREFIX:-$PWD/out/install/$CONFIG_NAME}"
 
 if [[ "$TARGET" == 'lua' || "$TARGET" == 'luajit' || "$TARGET" == 'luarocks' ]]; then
@@ -179,18 +176,11 @@ fi
 BUILD_FOLDER="${BUILD_FOLDER:-$PWD/out/${BUILD_FOLDER_NAME}/$CONFIG_NAME}"
 ${try_run}mkdir -p "$BUILD_FOLDER" || die "Cannot access build directory $BUILD_FOLDER" $?
 
-TOOLCHAIN_FILE="$ANDROID_NDK_PATH/build/cmake/android.toolchain.cmake"
+test ${#PLATFORM} -eq 0 || GENERATOR="$GENERATOR -A $PLATFORM"
 
 eval "set -- $EXTRA_CMAKE_OPTIONS"
 
-test $skip_config -eq 1 || ${try_run}cmake \
-    -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" \
-    -DANDROID_ABI="arm64-v8a" \
-    -DANDROID_PLATFORM="$PLATFORM" \
-    -DCMAKE_BUILD_TYPE:STRING=$CMAKE_BUILD_TYPE \
-    "-DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}" \
-    -S "$SCRIPTPATH" -B "$BUILD_FOLDER" "$@" || exit $?
-
+test $skip_config -eq 1 || ${try_run}cmake -G $GENERATOR -DCMAKE_BUILD_TYPE:STRING=$CMAKE_BUILD_TYPE "-DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}" -S "$SCRIPTPATH" -B "$BUILD_FOLDER" "$@" || exit $?
 test $skip_build -eq 1 || ${try_run}cmake --build "$BUILD_FOLDER" --target $TARGET -j$(nproc) || exit $?
 test $has_install -eq 0 || ${try_run}cmake --install "$BUILD_FOLDER" --prefix "$CMAKE_INSTALL_PREFIX" || exit $?
 
