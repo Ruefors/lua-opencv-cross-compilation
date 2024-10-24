@@ -1,0 +1,13 @@
+.idea
+.venv
+.vs
+/build.luarocks
+/node_modules
+/opencv_extra
+/out
+/samples/dnn/object_detection/models
+/*.rock
+/*.rockspec
+/*.sublime-workspace
+generated
+~$*
