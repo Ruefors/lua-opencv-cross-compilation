@@ -1,0 +1,14 @@
+# Target labels
+ lua-populate
+# Source files and their labels
+/Users/yangjiayu/project/lualib/lua-opencv-cross-compilation/out/build/Android-Release/_deps/lua-subbuild/CMakeFiles/lua-populate
+/Users/yangjiayu/project/lualib/lua-opencv-cross-compilation/out/build/Android-Release/_deps/lua-subbuild/CMakeFiles/lua-populate.rule
+/Users/yangjiayu/project/lualib/lua-opencv-cross-compilation/out/build/Android-Release/_deps/lua-subbuild/CMakeFiles/lua-populate-complete.rule
+/Users/yangjiayu/project/lualib/lua-opencv-cross-compilation/out/build/Android-Release/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-build.rule
+/Users/yangjiayu/project/lualib/lua-opencv-cross-compilation/out/build/Android-Release/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-configure.rule
+/Users/yangjiayu/project/lualib/lua-opencv-cross-compilation/out/build/Android-Release/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-download.rule
+/Users/yangjiayu/project/lualib/lua-opencv-cross-compilation/out/build/Android-Release/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-install.rule
+/Users/yangjiayu/project/lualib/lua-opencv-cross-compilation/out/build/Android-Release/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-mkdir.rule
+/Users/yangjiayu/project/lualib/lua-opencv-cross-compilation/out/build/Android-Release/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-patch.rule
+/Users/yangjiayu/project/lualib/lua-opencv-cross-compilation/out/build/Android-Release/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-test.rule
+/Users/yangjiayu/project/lualib/lua-opencv-cross-compilation/out/build/Android-Release/_deps/lua-subbuild/lua-populate-prefix/src/lua-populate-stamp/lua-populate-update.rule
