@@ -1,0 +1,10 @@
+# Hashes of file build rules.
+42330e399cfcdb7b5d04a436b25d84c5 luarocks/CMakeFiles/luarocks
+da4e647e2edecac03add6a99148ae9b3 luarocks/CMakeFiles/luarocks-complete
+c98907e293a846438ddd816ff17fb5eb luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-build
+f704352bf3d616c55183ae0925555c54 luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-configure
+7ecb18359ac8cad13caadca9c6f1185d luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-download
+0118413c1e0a35e21571ee72f87bf424 luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-install
+b117a313e616ef861ac48c040c978544 luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-mkdir
+71db4e3428d3474fcb438a33ac595c5a luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-patch
+d0e91b5b394340fbf1d36dac85ffe430 luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-update

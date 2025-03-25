@@ -3,9 +3,14 @@ cmake_minimum_required(VERSION 3.25)
 # https://www.youtube.com/watch?v=mczb2COlt1g
 
 project(opencv_lua)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(DEFAULT_BUILD_TYPE "Release")
-
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden")
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -s")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 if((NOT DEFINED CMAKE_BUILD_TYPE) OR ("${CMAKE_BUILD_TYPE} " STREQUAL " "))
   message(STATUS "Setting build type to '${DEFAULT_BUILD_TYPE}' as none was specified.")
   set(CMAKE_BUILD_TYPE "${DEFAULT_BUILD_TYPE}" CACHE STRING "Choose the type of build." FORCE)
@@ -57,48 +62,49 @@ set(BUILD_SHARED_LIBS ON)
 include(cmake/FindLua.cmake)
 set(BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS_BACKUP})
 
-# ===============
-# Luarocks
-# ===============
-add_subdirectory(luarocks)
+# # ===============
+# # Luarocks
+# # ===============
+# add_subdirectory(luarocks)
 
-set(LUA_ONLY "$ENV{LUA_ONLY}")
-if (LUA_ONLY)
-  message(STATUS "Processing Lua related targets only")
-  unset(LUA_INCLUDE_DIR CACHE)
-  unset(LUA_INTERPRETER CACHE)
-  unset(LUA_LIBRARY CACHE)
-  return()
-endif()
+# set(LUA_ONLY "$ENV{LUA_ONLY}")
+# if (LUA_ONLY)
+#   message(STATUS "Processing Lua related targets only")
+#   unset(LUA_INCLUDE_DIR CACHE)
+#   unset(LUA_INTERPRETER CACHE)
+#   unset(LUA_LIBRARY CACHE)
+#   return()
+# endif()
 
 # ===============
 # Python
 # ===============
-include(cmake/UsePython3Venv.cmake)
-if (VIRTUAL_ENV_created)
-  execute_process(
-    COMMAND "${Python3_EXECUTABLE}" -m pip install --upgrade pip
-    COMMAND_ECHO STDERR
-    COMMAND_ERROR_IS_FATAL ANY
-  )
-  execute_process(
-    COMMAND "${Python3_EXECUTABLE}" -m pip install numpy
-    COMMAND_ECHO STDERR
-    COMMAND_ERROR_IS_FATAL ANY
-  )
-  if (UNIX)
-    execute_process(
-      COMMAND "${Python3_EXECUTABLE}" -m pip install build auditwheel
-      COMMAND_ECHO STDERR
-      COMMAND_ERROR_IS_FATAL ANY
-    )
-    execute_process(
-      COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/patches/patch_auditwheel_whitelist.py"
-      COMMAND_ECHO STDERR
-      COMMAND_ERROR_IS_FATAL ANY
-    )
-  endif()
-endif()
+
+# include(cmake/UsePython3Venv.cmake)
+# if (VIRTUAL_ENV_created)
+#   execute_process(
+#     COMMAND "${Python3_EXECUTABLE}" -m pip install --upgrade pip
+#     COMMAND_ECHO STDERR
+#     COMMAND_ERROR_IS_FATAL ANY
+#   )
+#   execute_process(
+#     COMMAND "${Python3_EXECUTABLE}" -m pip install numpy
+#     COMMAND_ECHO STDERR
+#     COMMAND_ERROR_IS_FATAL ANY
+#   )
+#   if (UNIX)
+#     execute_process(
+#       COMMAND "${Python3_EXECUTABLE}" -m pip install build auditwheel
+#       COMMAND_ECHO STDERR
+#       COMMAND_ERROR_IS_FATAL ANY
+#     )
+#     execute_process(
+#       COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/patches/patch_auditwheel_whitelist.py"
+#       COMMAND_ECHO STDERR
+#       COMMAND_ERROR_IS_FATAL ANY
+#     )
+#   endif()
+# endif()
 
 # ===============
 # OpenCV
@@ -116,7 +122,7 @@ if (DEFINED ENV{OpenCV_DIR})
   )
 endif()
 
-if (UNIX AND (NOT APPLE))
+if (UNIX AND (NOT APPLE) AND (NOT ANDROID))
   set(WITH_QT "5" CACHE STRING "Build with Qt Backend support")
 endif()
 

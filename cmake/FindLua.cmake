@@ -1,94 +1,77 @@
-option(BUILD_LUA "Build Lua from source" ON)
+# - Try to find LUA
+#
+# The following variables are optionally searched for defaults
+#  LUA_ROOT_DIR:            Base directory where all LUA components are found
+#
+# The following are set after configuration is done: 
+#  LUA_FOUND
+#  LUA_INCLUDE_DIRS
+#  LUA_LIBRARIES
 
-if (BUILD_LUA AND (NOT WITH_LUA_ROCKS))
-  set(Lua_VERSION 5.4.6 CACHE STRING "Choose the Lua version.")
-  set_property(CACHE Lua_VERSION PROPERTY STRINGS "luajit-2.1" "5.4.6" "5.3.6" "5.2.4" "5.1.5")
+include(${CMAKE_CURRENT_LIST_DIR}/3rd.cmake)
+include(FindPackageHandleStandardArgs)
 
-  if (Lua_VERSION MATCHES "^luajit-")
-    string(SUBSTRING "${Lua_VERSION}" 7 -1 Luajit_VERSION)
-    set(LUA_SUFFIX "jit")
-  else()
-    set(LUA_SUFFIX "")
-    unset(Luajit_VERSION CACHE)
+set(LUA_ROOT_DIR ${THIRDPARTY_PATH}/lua-5.4.3)
+set(LUA_VERSION "5.4")
+
+ENSURE_MODULE(${LUA_ROOT_DIR})
+
+if(WIN32)
+  set(WINDOWS_PLATFORM win64)
+  set(CHECK_PLATFOR_VAR ${CMAKE_GENERATOR_PLATFORM})
+  if ("${CMAKE_GENERATOR_PLATFORM}" STREQUAL "")
+    set(CHECK_PLATFOR_VAR ${CMAKE_GENERATOR})
   endif()
-
-  add_subdirectory(lua${LUA_SUFFIX})
-
-  set_property(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" PROPERTY VS_STARTUP_PROJECT lua${LUA_SUFFIX})
-  file(TO_NATIVE_PATH "${${CMAKE_CURRENT_SOURCE_DIR}/test}" VS_DEBUGGER_WORKING_DIRECTORY)
-  set_target_properties(lua${LUA_SUFFIX} PROPERTIES
-    VS_DEBUGGER_COMMAND_ARGUMENTS test.lua
-    VS_DEBUGGER_WORKING_DIRECTORY "${VS_DEBUGGER_WORKING_DIRECTORY}"
-  )
+  if (NOT "${CHECK_PLATFOR_VAR}" MATCHES "(Win64|IA64|x64)")
+    set(WINDOWS_PLATFORM win32)
+  endif()
 endif()
 
-if (WITH_LUA_ROCKS OR (DEFINED ENV{LUA_DIR}))
-  unset(LUA_INCLUDE_DIR)
-  unset(LUA_INCLUDE_DIR CACHE)
-  unset(LUA_INTERPRETER)
-  unset(LUA_INTERPRETER CACHE)
-  unset(LUA_LIBRARY)
-  unset(LUA_LIBRARY CACHE)
-  unset(LUA_LIBRARIES)
-  unset(LUA_LIBRARIES CACHE)
+if(WIN32)
+  find_path(LUA_INCLUDE_DIR lua.hpp
+    PATHS ${LUA_ROOT_DIR}/include)
+elseif(ANDROID OR IOS)
+  # because android.toolchain.cmake set CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY
+  # so need set NO_CMAKE_FIND_ROOT_PATH
+  find_path(LUA_INCLUDE_DIR lua.hpp
+    HINTS ${LUA_ROOT_DIR}/include NO_CMAKE_FIND_ROOT_PATH)
+
+else()
+  find_path(LUA_INCLUDE_DIR lua.hpp
+    HINTS ${LUA_ROOT_DIR}/include)
 endif()
 
-if (DEFINED ENV{LUA_DIR})
-  message(STATUS "LUA_BINDIR=${LUA_BINDIR}")
-  message(STATUS "LUA_DIR=${LUA_DIR}")
-  message(STATUS "LUA_INCDIR=${LUA_INCDIR}")
-
-  if (Lua_VERSION MATCHES "^luajit-")
-    string(SUBSTRING "${Lua_VERSION}" 7 -1 Luajit_VERSION)
-    set(Lua_VERSION 5.1)
-    set(LUA_SUFFIX "jit")
+if(MSVC)
+  find_library(LUA_LIBRARY_RELEASE lua${LUA_VERSION}.lib PATHS ${LUA_ROOT_DIR}/lib/${WINDOWS_PLATFORM}/Release)
+  find_library(LUA_LIBRARY_DEBUG lua${LUA_VERSION}.lib PATHS ${LUA_ROOT_DIR}/lib/${WINDOWS_PLATFORM}/Debug)
+  set(LUA_LIBRARY optimized ${LUA_LIBRARY_RELEASE} debug ${LUA_LIBRARY_DEBUG})
+elseif(ANDROID)
+  if(ANDROID_ABI MATCHES "^armeabi(-v7a)?$")
+    find_library(LUA_LIBRARY lua${LUA_VERSION} HINTS ${LUA_ROOT_DIR}/lib/android/armeabi-v7a NO_CMAKE_FIND_ROOT_PATH)
+  elseif(ANDROID_ABI STREQUAL arm64-v8a)
+    find_library(LUA_LIBRARY lua${LUA_VERSION} HINTS ${LUA_ROOT_DIR}/lib/android/arm64-v8a NO_CMAKE_FIND_ROOT_PATH)
   else()
-    set(LUA_SUFFIX "")
-    unset(Luajit_VERSION CACHE)
+    message(FATAL_ERROR "Invalid Android ABI: ${ANDROID_ABI}.")
   endif()
-
-  list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/lua/Modules")
-
-  if (Lua_VERSION)
-    find_package(Lua ${Lua_VERSION} EXACT REQUIRED)
-  else()
-    find_package(Lua REQUIRED)
-  endif()
-
-  unset(_lua_interpreter_names)
-
-  if (Lua_INTERPRETER_NAME)
-    set(_lua_interpreter_names ${Lua_INTERPRETER_NAME})
-  else()
-    if (LUA_VERSION_STRING)
-      set(_lua_interpreter_names
-        luajit-${LUA_VERSION_MAJOR}.${LUA_VERSION_MINOR}
-        lua${LUA_VERSION_MAJOR}${LUA_VERSION_MINOR}
-        lua${LUA_VERSION_MAJOR}.${LUA_VERSION_MINOR}
-        lua-${LUA_VERSION_MAJOR}.${LUA_VERSION_MINOR}
-        lua.${LUA_VERSION_MAJOR}.${LUA_VERSION_MINOR}
-        )
-    endif()
-    list(APPEND _lua_interpreter_names luajit lua)
-  endif()
-
-  set(LUA_HINTS ENV LUA_DIR)
-  if (LUA_BINDIR)
-    list(PREPEND LUA_HINTS "${LUA_BINDIR}")
-  endif()
-
-  find_program(LUA_INTERPRETER
-    NAMES ${_lua_interpreter_names}
-    NAMES_PER_DIR
-    HINTS ${LUA_HINTS}
-    PATH_SUFFIXES bin
-    REQUIRED
-  )
-
-  unset(_lua_interpreter_names)
+elseif(IOS)
+  find_library(LUA_LIBRARY lua${LUA_VERSION} HINTS ${LUA_ROOT_DIR}/lib/ios/arm64 NO_CMAKE_FIND_ROOT_PATH)
+else()
+  #find_library(LUA_LIBRARY lua${LUA_VERSION} HINTS ${LUA_ROOT_DIR}/lib/linux)
+  list(APPEND LUA_INCLUDE_DIR ${LUA_ROOT_DIR}/include)
+  unset(MY_LIBS)
+  list(APPEND MY_LIBS lua${LUA_VERSION})
+  FIND_LIBS_NO_ROOT(LUA_LIBRARY ${LUA_ROOT_DIR}/lib/linux ${MY_LIBS})
 endif()
 
-message(STATUS "LUA_VERSION_STRING = ${LUA_VERSION_STRING}")
-message(STATUS "LUA_LIBRARIES = ${LUA_LIBRARIES}")
-message(STATUS "LUA_INCLUDE_DIR = ${LUA_INCLUDE_DIR}")
-message(STATUS "LUA_INTERPRETER = ${LUA_INTERPRETER}")
+find_package_handle_standard_args(Lua DEFAULT_MSG
+  LUA_INCLUDE_DIR LUA_LIBRARY)
+
+if(LUA_FOUND)
+  set(LUA_INCLUDE_DIRS ${LUA_INCLUDE_DIR})
+  set(LUA_LIBRARIES ${LUA_LIBRARY})
+  ENSURE_INSTALL(${LUA_ROOT_DIR})
+endif()
+
+message("LUA_FOUND= ${LUA_FOUND}")
+message("LUA_INCLUDE_DIRS= ${LUA_INCLUDE_DIRS}")
+message("LUA_LIBRARIES= ${LUA_LIBRARIES}")

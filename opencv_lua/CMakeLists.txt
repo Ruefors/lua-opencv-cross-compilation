@@ -2,7 +2,7 @@
 # OpenCV Lua
 # ===============
 set(target_name opencv_lua)
-
+set(CMAKE_VERBOSE_MAKEFILE ON)
 include(GNUInstallDirs)
 include(version.cmake)
 
@@ -42,12 +42,12 @@ endif()
 
 set(ENV{CMAKE_BINARY_DIR} "${CMAKE_BINARY_DIR}")
 set(ENV{Python3_EXECUTABLE} "${Python3_EXECUTABLE}")
-execute_process(
-  COMMAND node --unhandled-rejections=strict --trace-uncaught --trace-warnings generator/index.js
-  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-  COMMAND_ECHO STDERR
-  COMMAND_ERROR_IS_FATAL ANY
-)
+# execute_process(
+#   COMMAND node --unhandled-rejections=strict --trace-uncaught --trace-warnings generator/index.js
+#   WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+#   COMMAND_ECHO STDERR
+#   COMMAND_ERROR_IS_FATAL ANY
+# )
 
 file(GLOB_RECURSE project_source_headers "${CMAKE_RELATIVE_SOURCE_DIR}src/*.h" "${CMAKE_RELATIVE_SOURCE_DIR}src/*.hpp")
 list_set_filename_component(project_source_headers ABSOLUTE)
@@ -153,7 +153,7 @@ target_precompile_headers(${target_name} PRIVATE
   "$<$<COMPILE_LANGUAGE:CXX>:lua_generated_pch.hpp>"
 )
 
-target_link_libraries(${target_name} PRIVATE ${LUA_LIBRARIES} ${OpenCV_LIBS})
+target_link_libraries(${target_name} PRIVATE ${OpenCV_LIBS} ${LUA_LIBRARIES})
 target_include_directories(${target_name} PRIVATE ${LUA_INCLUDE_DIR})
 if (DEFINED OpenCV_INCLUDE_DIRS)
   target_include_directories(${target_name} PRIVATE ${OpenCV_INCLUDE_DIRS})

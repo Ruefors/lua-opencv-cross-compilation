@@ -1,0 +1,1 @@
+cmd='cd;<SOURCE_DIR>;COMMAND;./configure;--prefix=<BINARY_DIR>;--with-lua='

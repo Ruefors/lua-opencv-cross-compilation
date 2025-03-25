@@ -1,0 +1,5 @@
+/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/CMakeFiles/edit_cache.dir
+/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/CMakeFiles/rebuild_cache.dir
+/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/CMakeFiles/luarocks.dir
+/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/CMakeFiles/edit_cache.dir
+/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/CMakeFiles/rebuild_cache.dir

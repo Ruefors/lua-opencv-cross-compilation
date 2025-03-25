@@ -1,0 +1,13 @@
+# Target labels
+ luarocks
+# Source files and their labels
+/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/CMakeFiles/luarocks
+/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/CMakeFiles/luarocks.rule
+/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/CMakeFiles/luarocks-complete.rule
+/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-build.rule
+/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-configure.rule
+/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-download.rule
+/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-install.rule
+/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-mkdir.rule
+/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-patch.rule
+/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-update.rule

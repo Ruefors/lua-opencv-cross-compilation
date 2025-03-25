@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/CMakeFiles/luarocks"
+		},
+		{
+			"file" : "/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/CMakeFiles/luarocks.rule"
+		},
+		{
+			"file" : "/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/CMakeFiles/luarocks-complete.rule"
+		},
+		{
+			"file" : "/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-build.rule"
+		},
+		{
+			"file" : "/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-configure.rule"
+		},
+		{
+			"file" : "/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-download.rule"
+		},
+		{
+			"file" : "/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-install.rule"
+		},
+		{
+			"file" : "/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-mkdir.rule"
+		},
+		{
+			"file" : "/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-patch.rule"
+		},
+		{
+			"file" : "/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/luarocks-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"luarocks"
+		],
+		"name" : "luarocks"
+	}
+}

@@ -9,5 +9,5 @@
 /*.rock
 /*.rockspec
 /*.sublime-workspace
-generated
+/generated
 ~$*

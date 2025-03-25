@@ -1,0 +1,12 @@
+# This is a generated file and its contents are an internal implementation detail.
+# The download step will be re-executed if anything in this file changes.
+# No other meaning or use of this file is supported.
+
+method=url
+command=/opt/homebrew/Cellar/cmake/3.30.5/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/download-luarocks.cmake;COMMAND;/opt/homebrew/Cellar/cmake/3.30.5/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/verify-luarocks.cmake;COMMAND;/opt/homebrew/Cellar/cmake/3.30.5/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks-stamp/extract-luarocks.cmake
+source_dir=/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src/luarocks
+work_dir=/Users/yangjiayu/project/lualib/lua-opencv-0.0.5/luarocks/luarocks-prefix/src
+url(s)=https://github.com/luarocks/luarocks/archive/refs/tags/v3.11.0.tar.gz
+hash=SHA256=78698aa185f636e72865881425780a84c1dfb171f1789070f657f34116ff6521
+      no_extract=
+

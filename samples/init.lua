@@ -1,3 +1,4 @@
+package.cpath = package.cpath..";/Users/yangjiayu/project/lualib/lua-opencv-4.10.0/out/build/Android-Release/lib/?.so"
 local opencv_lua = require("opencv_lua")
 local cv = opencv_lua.cv
 
